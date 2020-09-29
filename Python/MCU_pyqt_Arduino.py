@@ -32,7 +32,7 @@ class App(QDialog):
         self.height = 800
         self.commands = []
         self.initUI()
-        self.time = np.linspace(0, 47.8, 360) #Time array for waveform # TO-DO
+        self.time = np.linspace(0, 47.8, 150) #Time array for waveform # TO-DO
         self.ser = serial.Serial(port=port, baudrate=115200, timeout=20) #Setup serial
         self.frequency = [0]
         self.phase = [0]
@@ -91,6 +91,7 @@ class App(QDialog):
             current_set = self.parse_data(current)
             voltage_max_idx = np.argmax(voltage_set)
             current_max_idx = np.argmax(current_set)
+            self.time = np.linspace(0, 47.8, length)
             if abs(voltage_max_idx - current_max_idx) < 5:
                 print("acceptable phase shift occurs at", freq, "frequency (Hz)")
             self.amp = AmpliferState(voltage_set, current_set, freq, length, voltage_max_idx, current_max_idx)
